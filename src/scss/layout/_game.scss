@@ -1,0 +1,19 @@
+@use '../abstracts/mixins';
+
+.game {
+  &.__letters-guess {
+    @include flex(row, wrap);
+    @include main-font(1.8rem);
+    gap: 1rem;
+  }
+
+  &.__letters-choices {
+    @include flex(row, wrap);
+    @include main-font(1.8rem);
+    padding: 1rem;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}
