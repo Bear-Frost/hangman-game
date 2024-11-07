@@ -1,12 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./build/main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./build/main.css" />
     <title>Hang Man Game</title>
-</head>
-<body>
-<script src="./build/index.js"></script>
-</body>
+  </head>
+  <body>
+    <main class="game">
+      <!-- this section contains the gallows on where the man is going to get hang, and also the tip and the question -->
+      <section>
+        <section class="game__gallows">
+          <div class="gallows__stand">
+            <img
+              src="./src/assets/img/gallow_wood.png"
+              alt=""
+              aria-hidden="true"
+              height="99"
+              width="61"
+            />
+            <img
+              src="./src/assets/img/gallow_wood.png"
+              alt=""
+              aria-hidden="true"
+              height="99"
+              width="61"
+            />
+            <img
+              src="./src/assets/img/gallow_wood.png"
+              alt=""
+              aria-hidden="true"
+              height="99"
+              width="61"
+            />
+            <img
+              src="./src/assets/img/rope.png"
+              alt=""
+              aria-hidden="true"
+              height="72"
+              width="35"
+            />
+          </div>
+          <div class="man">
+            <img src="src/assets/img/man_head.png" alt="" aria-hidden="true"/>
+            <img src="src/assets/img/man_body.png" alt="" aria-hidden="true"/>
+            <img src="src/assets/img/man_left_hand.png" alt="" aria-hidden="true"/>
+            <img src="src/assets/img/man_right_hand.png" alt="" aria-hidden="true"/>
+            <img src="src/assets/img/man_left_foot.png" alt="" aria-hidden="true"/>
+            <img src="src/assets/img/man_right_foot.png" alt="" aria-hidden="true"/>
+          </div>
+        </section>
+
+        <section class="game__question-tip">
+          <div class="question-tip__tip">
+            <img
+              src="./src/assets/icons/tip_icon.svg"
+              alt=""
+              aria-hidden="true"
+              width="31"
+              height="49"
+            />
+            <h3>tip</h3>
+          </div>
+          <div class="question-tip__question">
+            <p>
+              Syntax that allows React developers to write HTML inide of
+              JavaScript
+            </p>
+          </div>
+        </section>
+      </section>
+      <!-- this section contains the letters of that has been picked by the user to guess the word -->
+      <section class="game__letters-guess"></section>
+      <!-- this section contains all of the letters that are available, to guess the word -->
+      <section class="game__letters-choices"></section>
+    </main>
+    <!-- <script src="./build/index.js"></script> -->
+  </body>
 </html>
