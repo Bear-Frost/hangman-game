@@ -1,0 +1,13 @@
+@use '../abstracts/variables';
+
+@mixin flex($direction: column, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  wrap: $wrap;
+}
+
+@mixin main-font($font-size: 1rem) {
+  font-family: (variables.$font-name, variables.$font-serif);
+  font-weight: regular;
+  font-size: $font-size;
+}
