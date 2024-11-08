@@ -1,6 +1,10 @@
-@use '../abstracts/mixins';
+@use '../abstracts/mixins' as *;
 
 .game {
+  @include flex;
+
+  gap: 1rem;
+
   &.__letters-guess {
     @include flex(row, wrap);
     @include main-font(1.8rem);
