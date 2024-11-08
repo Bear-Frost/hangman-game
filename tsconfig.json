@@ -4,7 +4,7 @@
     "lib": ["DOM", "ES2016"],
 
     "module": "ESNext",
-    "rootDir": "./src/index.ts",
+    "rootDir": "./src",
     "outDir": "./build",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
