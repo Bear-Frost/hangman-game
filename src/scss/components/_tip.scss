@@ -2,7 +2,7 @@
 @use '../abstracts/mixins' as *;
 
 .question-tip__tip {
-  @include main-font(1.8rem);
+  @include main-font(1.5rem);
 
   color: $white;
   text-transform: capitalize;

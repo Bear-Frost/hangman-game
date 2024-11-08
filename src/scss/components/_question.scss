@@ -2,7 +2,7 @@
 @use '../abstracts/mixins' as *;
 
 .question-tip__question {
-  @include main-font(1.8rem);
+  @include main-font;
 
   color: $white;
 }
