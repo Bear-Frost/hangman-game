@@ -1,3 +1,5 @@
+@use '../abstracts/variables' as *;
+
 *,
 *::before,
 *::after {
@@ -10,8 +12,13 @@
 }
 
 body {
+  min-height: 100vh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background: $main-game-bg;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 img,
