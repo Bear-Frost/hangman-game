@@ -1,0 +1,10 @@
+@use '../abstracts/mixins' as *;
+
+.game__letter-choice {
+  @include main-font(1.5rem);
+
+  cursor: pointer;
+  color: white;
+  border: none;
+  background: transparent;
+}
