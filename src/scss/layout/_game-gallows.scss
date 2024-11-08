@@ -1,3 +1,5 @@
+@use '../abstracts/variables' as *;
+
 .game__gallows {
   $gallow-size: 22rem;
 
@@ -7,4 +9,10 @@
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
+}
+
+@media screen and (min-width: $desktop) {
+  .game__gallows {
+    flex: 0.5;
+  }
 }
