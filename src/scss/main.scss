@@ -9,8 +9,12 @@
 @use './layout/game-gallows';
 @use './layout/man';
 @use './layout/question-tip';
+@use './layout/game-guess';
+@use './layout/game-letters-choices';
 
 //components
 @use './components/line-separator';
 @use './components/question';
 @use './components/tip';
+@use './components/letters-choice';
+@use './components/game-gallows-container';
