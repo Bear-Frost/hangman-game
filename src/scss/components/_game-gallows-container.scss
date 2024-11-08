@@ -1,0 +1,8 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+@media screen and (min-width: $desktop) {
+  .game__gallows-container {
+    @include flex(row);
+  }
+}
