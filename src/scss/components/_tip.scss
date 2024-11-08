@@ -1,0 +1,9 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.question-tip__tip {
+  @include main-font(1.8rem);
+
+  color: $white;
+  text-transform: capitalize;
+}
