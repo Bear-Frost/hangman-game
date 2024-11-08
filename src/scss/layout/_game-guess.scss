@@ -1,0 +1,8 @@
+@use '../abstracts/mixins' as *;
+
+.game__guess {
+  @include flex(row, wrap);
+
+  margin-top: 4.5rem;
+  gap: 1rem;
+}

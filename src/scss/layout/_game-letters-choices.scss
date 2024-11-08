@@ -1,0 +1,15 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+.game__letters-choices {
+  @include flex(row, wrap);
+
+  padding: 2rem;
+  gap: 1rem;
+}
+
+@media screen and (min-width: $desktop) {
+  .game__letters-choices {
+    justify-content: center;
+  }
+}
