@@ -1,0 +1,33 @@
+@use '../abstracts/mixins' as *;
+
+.gallows__stand {
+  @include wrapper;
+
+  inset: 0;
+
+  & > img:first-child {
+    bottom: calc(0rem + 40px);
+    left: 1rem;
+  }
+
+  & > img:nth-child(2) {
+    bottom: calc(0rem + 40px + 95px);
+    left: 1rem;
+  }
+
+  & > img:nth-child(3) {
+    top: 0;
+    left: 4.5rem;
+    transform: rotate(90deg);
+  }
+
+  & > img:nth-child(4) {
+    top: 1.5rem;
+    left: 1rem;
+  }
+
+  & > img:nth-child(5) {
+    top: 3.5rem;
+    left: 5rem;
+  }
+}
