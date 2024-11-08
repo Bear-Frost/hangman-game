@@ -1,0 +1,10 @@
+.game__gallows {
+  $gallow-size: 22rem;
+
+  height: $gallow-size;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+}
