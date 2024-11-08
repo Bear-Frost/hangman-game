@@ -8,7 +8,6 @@
 
 @mixin main-font($font-size: 1rem) {
   font-family: $font-name, $font-serif;
-  font-weight: regular;
   font-size: $font-size;
 }
 
