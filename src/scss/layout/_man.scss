@@ -1,0 +1,37 @@
+@use '../abstracts/mixins' as *;
+
+.man {
+  @include wrapper;
+
+  inset: 0;
+
+  & > img:first-child {
+    top: 7.6rem;
+    left: 4.8rem;
+  }
+
+  & > img:nth-child(2) {
+    top: 10.5rem;
+    left: 5.5rem;
+  }
+
+  & > img:nth-child(3) {
+    top: 11.2rem;
+    left: 4.8rem;
+  }
+
+  & > img:nth-child(4) {
+    top: 11.2rem;
+    left: 6.1rem;
+  }
+
+  & > img:nth-child(5) {
+    top: 13rem;
+    left: 4.5rem;
+  }
+
+  & > img:nth-child(6) {
+    top: 13rem;
+    left: 5.9rem;
+  }
+}
