@@ -1,0 +1,37 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.game__play-again-dialog {
+  @include flex;
+  @include main-font(1.5rem);
+
+  height: 100%;
+  width: 100%;
+  color: $white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  background-color: $transparent-dark-clr;
+  gap: 2rem;
+  position: absolute;
+}
+
+.game-correct-word-state {
+  text-transform: uppercase;
+}
+
+.play-again-dialog__play-again-button {
+  cursor: pointer;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-transform: capitalize;
+  border-radius: 5px;
+  border: 2px solid $white;
+  background-color: transparent;
+}
+
+.play-again-dialog__correct-word-text {
+  color: $correct-clr;
+  text-transform: uppercase;
+}
