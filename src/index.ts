@@ -115,7 +115,7 @@ class HangmanGame {
 
   private async requestQuestions(): Promise<ITipAndAnswer[]> {
     try {
-      const QUESTIONS_URL = './data/questions.json';
+      const QUESTIONS_URL = new URL('./data/questions.json', import.meta.url);
       const questionRequest = await fetch(QUESTIONS_URL);
       if (!questionRequest.ok) {
         throw new Error('failed fetching the questions');
@@ -397,8 +397,10 @@ class PlaceholderLetterElement {
       placeholderElementId,
     );
 
-    placeholderLetterUnderline.src =
-      '../../src/assets/img/letter_underline.png';
+    placeholderLetterUnderline.src = new URL(
+      './assets/img/letter_underline.png',
+      import.meta.url,
+    ).href;
     placeholderLetterUnderline.alt = '';
     placeholderLetterUnderline.height = 31;
     placeholderLetterUnderline.width = 50;
