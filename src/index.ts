@@ -115,7 +115,7 @@ class HangmanGame {
 
   private async requestQuestions(): Promise<ITipAndAnswer[]> {
     try {
-      const QUESTIONS_URL = '../../src/data/questions.json';
+      const QUESTIONS_URL = './data/questions.json';
       const questionRequest = await fetch(QUESTIONS_URL);
       if (!questionRequest.ok) {
         throw new Error('failed fetching the questions');

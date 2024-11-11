@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./build/main.css" />
+    <link rel="stylesheet" href="./src/scss/main.scss" />
     <title>Hang Man Game</title>
   </head>
   <body>
@@ -113,8 +113,10 @@
             <p id="tip-message-element"></p>
           </div>
           <!-- this section contains the letters of that has been picked by the user to guess the word -->
-          <section class="game__guess" id="letter-placeholder-container">
-          </section>
+          <section
+            class="game__guess"
+            id="letter-placeholder-container"
+          ></section>
         </section>
       </section>
 
@@ -122,8 +124,7 @@
       <section
         class="game__letters-choices"
         id="letter-button-choices-container"
-      >
-     </section>
+      ></section>
 
       <section class="game__play-again-dialog" id="game-result-dialog">
         <p>You <span id="game-result-text"></span></p>
@@ -143,6 +144,6 @@
         </button>
       </section>
     </main>
-    <script src="./build/index.js" l type="module"></script>
+    <script src="src/index.ts" type="module"></script>
   </body>
 </html>
