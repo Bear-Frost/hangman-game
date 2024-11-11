@@ -5,6 +5,10 @@
 
   inset: 0;
 
+  & > img {
+    display: none;
+  }
+
   & > img:first-child {
     bottom: calc(0rem + 40px);
     left: 1rem;
