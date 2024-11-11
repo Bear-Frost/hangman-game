@@ -4,6 +4,8 @@
     "lib": ["DOM", "ES2016"],
 
     "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "rootDir": "./src",
     "outDir": "./build",
     "esModuleInterop": true,

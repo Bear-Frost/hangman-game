@@ -1,3 +1,5 @@
+import questions from './data/questions.json';
+
 interface ITipAndAnswer {
   tip: string;
   answer: string;
@@ -35,7 +37,8 @@ const LETTERS = [
 type TLetters = (typeof LETTERS)[number];
 
 class HangmanGame {
-  private tipsAndAnswers: ITipAndAnswer[] = [];
+  private tipsAndAnswers: ITipAndAnswer[] =
+    HangmanGame.shuffleTipsAndAndswers(questions);
 
   private currentTipAndAnswerIndex: number = 0;
   private currentTipAndAnswer: ITipAndAnswer = { tip: '', answer: '' };
@@ -99,10 +102,6 @@ class HangmanGame {
   }
 
   public async init(): Promise<void> {
-    this.tipsAndAnswers = HangmanGame.shuffleTipsAndAndswers(
-      await this.requestQuestions(),
-    );
-
     this.currentTipAndAnswer =
       this.tipsAndAnswers[this.currentTipAndAnswerIndex];
 
