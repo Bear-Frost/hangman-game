@@ -40,6 +40,8 @@ class HangmanGame {
   private currentTipAndAnswerIndex: number = 0;
   private currentTipAndAnswer: ITipAndAnswer = { tip: '', answer: '' };
 
+  private gameResult: string = '';
+
   private availableLetters: string[] = [...LETTERS];
   private correctLettersChoices: string = '';
 
@@ -64,6 +66,7 @@ class HangmanGame {
   private buttonLetterElement = new ButtonLetterElement();
   private placeholderLetterElement = new PlaceholderLetterElement();
   private tipMessageElement = new TipElement();
+  private gameResultDialog = new GameResult();
 
   static isElementOfType<T extends HTMLElement>(
     element: HTMLElement | null,
@@ -72,21 +75,42 @@ class HangmanGame {
     return element !== null && element instanceof type;
   }
 
-  static isTwoWordsEqual(firstWord: string, secondWord: string): boolean {
+  private static isTwoWordsEqual(
+    firstWord: string,
+    secondWord: string,
+  ): boolean {
     return (
       firstWord.toLowerCase().split('').sort().join('') ===
       secondWord.toLowerCase().split('').sort().join('')
     );
   }
 
+  private static shuffleTipsAndAndswers(
+    tipsAndAnswers: ITipAndAnswer[],
+  ): ITipAndAnswer[] {
+    for (let i = tipsAndAnswers.length - 1; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      [tipsAndAnswers[i], tipsAndAnswers[randomIndex]] = [
+        tipsAndAnswers[randomIndex],
+        tipsAndAnswers[i],
+      ];
+    }
+    return tipsAndAnswers;
+  }
+
   public async init(): Promise<void> {
-    this.tipsAndAnswers = await this.requestQuestions();
+    this.tipsAndAnswers = HangmanGame.shuffleTipsAndAndswers(
+      await this.requestQuestions(),
+    );
+
     this.currentTipAndAnswer =
       this.tipsAndAnswers[this.currentTipAndAnswerIndex];
 
     this.generateAllAnswerLetterPlaceholder();
     this.generateAllAvailableLettersElement();
     this.generateTipMessage();
+
+    this.initPlayAgainEvent();
   }
 
   private async requestQuestions(): Promise<ITipAndAnswer[]> {
@@ -138,75 +162,88 @@ class HangmanGame {
   }
 
   private increaseCurrentStageOfHangmanLife() {
-    const currentPartOfHangmanLifeElemnet = document.getElementById(
+    const currentHangmanLifeElement = document.getElementById(
       `${this.STAGE_OF_HANGMAN_LIFE[this.currentStageOfHangManLife]}`,
     );
 
     if (
-      HangmanGame.isElementOfType(
-        currentPartOfHangmanLifeElemnet,
-        HTMLImageElement,
-      )
+      HangmanGame.isElementOfType(currentHangmanLifeElement, HTMLImageElement)
     ) {
-      currentPartOfHangmanLifeElemnet.style.display = 'block';
+      currentHangmanLifeElement.setAttribute('data-active', 'true');
+      currentHangmanLifeElement.style.display = 'block';
       this.currentStageOfHangManLife += 1;
     }
   }
 
   private checkIfPlayerWinOrLose(): void {
     if (this.currentStageOfHangManLife >= this.PLAYER_MAX_LIVES) {
-      alert('user just lose the game');
+      this.showGameResultState('lose');
     } else if (
       HangmanGame.isTwoWordsEqual(
         this.correctLettersChoices,
         this.currentTipAndAnswer.answer,
       )
     ) {
-      alert('the user just won the game');
+      this.showGameResultState('win');
     }
   }
 
-  private generateAllAvailableLettersElement(): void {
-    const buttonLetterElementContainer = document.getElementById(
-      'letter-button-choices-container',
-    );
-    for (const letter of this.availableLetters) {
-      if (
-        HangmanGame.isElementOfType(buttonLetterElementContainer, HTMLElement)
-      ) {
-        const buttonLetterElementId = `button-letter-${letter}-element`;
+  private showGameResultState(gameResultState: string) {
+    this.gameResult = gameResultState;
 
-        buttonLetterElementContainer.append(
-          this.buttonLetterElement.createButtonLetterElement(
-            buttonLetterElementId,
-            letter,
-            event => this.pickLetter(event),
-          ),
-        );
-      }
+    setTimeout(() => {
+      this.gameResultDialog.showGameResultDialog(
+        this.currentTipAndAnswer.answer,
+        this.gameResult,
+      );
+    }, 300);
+  }
+
+  private nextTipAndAnswer(): void {
+    if (this.currentTipAndAnswerIndex >= this.tipsAndAnswers.length - 1) {
+      alert('you have guess all of the words');
+      return;
+    }
+
+    this.currentTipAndAnswerIndex += 1;
+    this.currentTipAndAnswer =
+      this.tipsAndAnswers[this.currentTipAndAnswerIndex];
+
+    this.correctLettersChoices = '';
+    this.currentStageOfHangManLife = 0;
+
+    const currentHangManLifeStageElements = document.querySelectorAll(
+      'img[data-active="true"]',
+    );
+
+    currentHangManLifeStageElements.forEach(lifeStageImage => {
+      (lifeStageImage as HTMLImageElement).style.display = 'none';
+      lifeStageImage.setAttribute('data-active', 'false');
+    });
+
+    this.buttonLetterElement.unpickedButtonLetterElements();
+    this.buttonLetterElement.enabledButtonLetterElements();
+    this.placeholderLetterElement.clearPlaceholderLetterElementContainer();
+    this.generateAllAnswerLetterPlaceholder();
+    this.tipMessageElement.loadTipMessage(this.currentTipAndAnswer.tip);
+    this.gameResultDialog.hideGameResultDialog();
+  }
+
+  private generateAllAvailableLettersElement(): void {
+    for (const letter of this.availableLetters) {
+      this.buttonLetterElement.createButtonLetterElement(letter, event =>
+        this.pickLetter(event),
+      );
     }
   }
 
   private generateAllAnswerLetterPlaceholder(): void {
-    const correctAnswerLetters = this.currentTipAndAnswer.answer.split('');
+    const correctAnswerLetters = this.currentTipAndAnswer.answer
+      .toUpperCase()
+      .split('');
 
     for (const letter of correctAnswerLetters) {
-      const placeholderLetterElementContainer = document.getElementById(
-        'letter-placeholder-container',
-      );
-      const placeholderLetterElementId = `placeholder-letter-${letter}-element`;
-      if (
-        HangmanGame.isElementOfType(
-          placeholderLetterElementContainer,
-          HTMLElement,
-        )
-      ) {
-        placeholderLetterElementContainer.append(
-          this.placeholderLetterElement.createPlaceholderElement(
-            placeholderLetterElementId,
-          ),
-        );
-      }
+      this.placeholderLetterElement.createPlaceholderElement(letter);
     }
   }
 
@@ -214,6 +251,14 @@ class HangmanGame {
     const tipMessage = this.currentTipAndAnswer.tip;
 
     this.tipMessageElement.loadTipMessage(tipMessage);
+  }
+
+  private initPlayAgainEvent() {
+    const playAgainButton = document.getElementById(
+      'play-again-button',
+    ) as HTMLButtonElement;
+
+    playAgainButton.addEventListener('click', () => this.nextTipAndAnswer());
   }
 
   private isValidTipsAndAnswers(items: unknown): items is ITipAndAnswer[] {
@@ -228,22 +273,26 @@ class HangmanGame {
 }
 
 class ButtonLetterElement {
+  private buttonLetterElementContainer = document.getElementById(
+    'letter-button-choices-container',
+  ) as HTMLDivElement;
+
   public createButtonLetterElement(
-    buttonLetterElementId: string,
-    buttonLetterElementText: string,
+    letter: string,
     clickHandler: (event: MouseEvent) => void,
-  ): HTMLButtonElement {
+  ): void {
     const buttonLetterElement = document.createElement('button');
 
-    buttonLetterElement.setAttribute('id', buttonLetterElementId);
+    buttonLetterElement.setAttribute('id', `button-letter-${letter}-element`);
     buttonLetterElement.setAttribute('class', 'game__letter-choice');
-    buttonLetterElement.setAttribute('data-letter', buttonLetterElementText);
+    buttonLetterElement.setAttribute('data-letter', letter);
+    buttonLetterElement.setAttribute('data-active', 'false');
 
-    buttonLetterElement.textContent = buttonLetterElementText;
+    buttonLetterElement.textContent = letter;
 
     buttonLetterElement.addEventListener('click', clickHandler);
 
-    return buttonLetterElement;
+    this.buttonLetterElementContainer.append(buttonLetterElement);
   }
 
   public pickedButtonLetterElement(letter: string): void {
@@ -267,16 +316,33 @@ class ButtonLetterElement {
 
       buttonLetterElement.style.transform = `translate(${buttonLetterElementTargetPosition})`;
 
+      buttonLetterElement.setAttribute('data-active', 'true');
+
       this.toggleDisableButtonLetterElementState(letter, true);
     }
   }
 
-  public unpickedButtonLetterElement(buttonLetterElementId: string): void {
-    const buttonLetterElement = document.getElementById(buttonLetterElementId);
-    if (HangmanGame.isElementOfType(buttonLetterElement, HTMLButtonElement)) {
-      buttonLetterElement.style.transform = `translate(0px,0px)`;
-      buttonLetterElement.disabled = false;
-    }
+  public unpickedButtonLetterElements(): void {
+    const buttonLetterElement: NodeListOf<HTMLButtonElement> =
+      document.querySelectorAll('button[data-active="true"]');
+
+    buttonLetterElement.forEach(pickedButtonLetterElement => {
+      pickedButtonLetterElement.style.transform = 'translate(0px,0px)';
+      pickedButtonLetterElement.disabled = false;
+      pickedButtonLetterElement.setAttribute('data-active', 'false');
+    });
+  }
+
+  public enabledButtonLetterElements(): void {
+    const disabledButtonLetterElements: NodeListOf<HTMLButtonElement> =
+      document.querySelectorAll('button.game__letter-choice--uncorrect-letter');
+
+    disabledButtonLetterElements.forEach(disabledLetterButton => {
+      disabledLetterButton.classList.remove(
+        'game__letter-choice--uncorrect-letter',
+      );
+      disabledLetterButton.disabled = false;
+    });
   }
 
   public toggleDisableButtonLetterElementState(
@@ -302,11 +368,11 @@ class ButtonLetterElement {
     if (HangmanGame.isElementOfType(buttonLetterElement, HTMLButtonElement)) {
       if (toggleState) {
         buttonLetterElement.classList.add(
-          'game__leter-choice--uncorrect-letter',
+          'game__letter-choice--uncorrect-letter',
         );
       } else {
         buttonLetterElement.classList.remove(
-          'game__leter-choice--uncorrect-letter',
+          'game__letter-choice--uncorrect-letter',
         );
       }
       return;
@@ -315,9 +381,12 @@ class ButtonLetterElement {
 }
 
 class PlaceholderLetterElement {
-  public createPlaceholderElement(
-    placeholderElementId: string,
-  ): HTMLDivElement {
+  private placeholderLetterElementContainer = document.getElementById(
+    'letter-placeholder-container',
+  ) as HTMLElement;
+
+  public createPlaceholderElement(letter: string): void {
+    const placeholderElementId = `placeholder-letter-${letter}-element`;
     const placeholderLetterElement = document.createElement('div');
     const placeholderLetterUnderline = document.createElement('img');
 
@@ -338,35 +407,55 @@ class PlaceholderLetterElement {
 
     placeholderLetterElement.append(placeholderLetterUnderline);
 
-    return placeholderLetterElement;
+    this.placeholderLetterElementContainer.append(placeholderLetterElement);
   }
 
-  public clearPlaceholderLetterElementContainer(
-    placeholderLetterContainer: HTMLElement,
-  ): void {
-    placeholderLetterContainer.replaceChildren();
+  public clearPlaceholderLetterElementContainer(): void {
+    this.placeholderLetterElementContainer.replaceChildren();
   }
 }
 
 class TipElement {
-  private tipMessageElement = document.getElementById('tip-message-element');
+  private tipMessageElement = document.getElementById(
+    'tip-message-element',
+  ) as HTMLParagraphElement;
 
   public loadTipMessage(tipMessage: string): void {
-    if (this.isParagraphElement(this.tipMessageElement)) {
-      this.tipMessageElement.textContent = tipMessage;
-    }
+    this.tipMessageElement.textContent = tipMessage;
   }
 
   public clearTipMessage() {
-    if (this.isParagraphElement(this.tipMessageElement)) {
-      this.tipMessageElement.textContent = '';
-    }
+    this.tipMessageElement.textContent = '';
+  }
+}
+
+class GameResult {
+  private gameDialogElement = document.getElementById(
+    'game-result-dialog',
+  ) as HTMLElement;
+
+  private gameResultText = document.getElementById(
+    'game-result-text',
+  ) as HTMLSpanElement;
+
+  private gameCorrectWordText = document.getElementById(
+    'game-correct-word-text',
+  ) as HTMLParagraphElement;
+
+  public showGameResultDialog(correctWord: string, gameResult: string): void {
+    const gameResultTextColor =
+      gameResult === 'win' ? 'hsl(101, 58%, 44%)' : 'hsl(0, 58%, 44%)';
+
+    this.gameDialogElement.style.display = 'flex';
+
+    this.gameResultText.textContent = gameResult;
+    this.gameResultText.style.color = gameResultTextColor;
+
+    this.gameCorrectWordText.textContent = correctWord;
   }
 
-  private isParagraphElement(
-    element: HTMLElement | null,
-  ): element is HTMLParagraphElement {
-    return element !== null && element instanceof HTMLParagraphElement;
+  public hideGameResultDialog() {
+    this.gameDialogElement.style.display = 'none';
   }
 }
 
