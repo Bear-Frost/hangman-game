@@ -9,7 +9,7 @@
   <body>
     <main class="game">
       <!-- this section contains the gallows on where the man is going to get hang, and also the tip and the question -->
-      <section>
+      <section class="game__gallows-container">
         <section class="game__gallows">
           <div class="gallows__stand">
             <img
@@ -18,6 +18,7 @@
               aria-hidden="true"
               height="99"
               width="61"
+              id="first-gallow-wood"
             />
             <img
               src="./src/assets/img/gallow_wood.png"
@@ -25,6 +26,7 @@
               aria-hidden="true"
               height="99"
               width="61"
+              id="second-gallow-wood"
             />
             <img
               src="./src/assets/img/gallow_wood.png"
@@ -32,6 +34,7 @@
               aria-hidden="true"
               height="99"
               width="61"
+              id="third-gallow-wood"
             />
             <img
               src="./src/assets/img/gallow_wood.png"
@@ -39,6 +42,7 @@
               aria-hidden="true"
               height="99"
               width="61"
+              id="fourth-gallow-wood"
             />
             <img
               src="./src/assets/img/rope.png"
@@ -46,30 +50,45 @@
               aria-hidden="true"
               height="72"
               width="35"
+              id="rope"
             />
           </div>
           <div class="man">
-            <img src="src/assets/img/man_head.png" alt="" aria-hidden="true" />
-            <img src="src/assets/img/man_body.png" alt="" aria-hidden="true" />
+            <img
+              src="src/assets/img/man_head.png"
+              alt=""
+              aria-hidden="true"
+              id="man-head"
+            />
+            <img
+              src="src/assets/img/man_body.png"
+              alt=""
+              aria-hidden="true"
+              id="man-body"
+            />
             <img
               src="src/assets/img/man_left_hand.png"
               alt=""
               aria-hidden="true"
+              id="man-left-hand"
             />
             <img
               src="src/assets/img/man_right_hand.png"
               alt=""
               aria-hidden="true"
+              id="man-right-hand"
             />
             <img
               src="src/assets/img/man_left_foot.png"
               alt=""
               aria-hidden="true"
+              id="man-left-foot"
             />
             <img
               src="src/assets/img/man_right_foot.png"
               alt=""
               aria-hidden="true"
+              id="man-right-foot"
             />
           </div>
           <img
@@ -91,18 +110,39 @@
             <p>tip</p>
           </div>
           <div class="question-tip__question">
-            <p>
-              Syntax that allows React developers to write HTML inide of
-              JavaScript
-            </p>
+            <p id="tip-message-element"></p>
           </div>
+          <!-- this section contains the letters of that has been picked by the user to guess the word -->
+          <section class="game__guess" id="letter-placeholder-container">
+          </section>
         </section>
       </section>
-      <!-- this section contains the letters of that has been picked by the user to guess the word -->
-      <section class="game__letters-guess"></section>
+
       <!-- this section contains all of the letters that are available, to guess the word -->
-      <section class="game__letters-choices"></section>
+      <section
+        class="game__letters-choices"
+        id="letter-button-choices-container"
+      >
+     </section>
+
+      <section class="game__play-again-dialog" id="game-result-dialog">
+        <p>You <span id="game-result-text"></span></p>
+        <p>
+          the correct word is
+          <span
+            id="game-correct-word-text"
+            class="play-again-dialog__correct-word-text"
+          ></span>
+        </p>
+        <button
+          type="button"
+          class="play-again-dialog__play-again-button"
+          id="play-again-button"
+        >
+          play again
+        </button>
+      </section>
     </main>
-    <!-- <script src="./build/index.js"></script> -->
+    <script src="./build/index.js" l type="module"></script>
   </body>
 </html>
