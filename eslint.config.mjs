@@ -5,7 +5,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 
 export default [
   // Ignore the dist directory
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'build'] },
 
   // Files to lint
   { files: ['**/*.{js,mjs,cjs,ts}'] },
