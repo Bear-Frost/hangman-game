@@ -22,3 +22,4 @@ Thumbs.db
 # dotenv environment variables file
 .env
 .e
+.parcel-cache
