@@ -5,6 +5,10 @@
 
   inset: 0;
 
+  & > img {
+    display: none;
+  }
+
   & > img:first-child {
     top: 7.6rem;
     left: 4.8rem;
