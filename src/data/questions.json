@@ -1,0 +1,42 @@
+[
+  {
+    "tip": "JavaScript XML syntax extension",
+    "answer": "jsx"
+  },
+  {
+    "tip": "Type of storage that saves data between sessions",
+    "answer": "cache"
+  },
+  {
+    "tip": "A backend JavaScript runtime environment",
+    "answer": "deno"
+  },
+  {
+    "tip": "JavaScript package manager often used with Node.js",
+    "answer": "yarn"
+  },
+  {
+    "tip": "A programming language often used for server-side web development, especially with the Rails framework.",
+    "answer": "ruby"
+  },
+  {
+    "tip": "A security feature in web browsers that restricts web page requests to different origins.",
+    "answer": "cors"
+  },
+  {
+    "tip": "One of the main HTTP methods for data retrieval",
+    "answer": "get"
+  },
+  {
+    "tip": "A library for reactive web apps",
+    "answer": "vue"
+  },
+  {
+    "tip": "Common software to manage code versions",
+    "answer": "git"
+  },
+  {
+    "tip": "Graphical editor often used for web design mockups",
+    "answer": "figma"
+  }
+]
