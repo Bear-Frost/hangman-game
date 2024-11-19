@@ -4,10 +4,6 @@
     "answer": "jsx"
   },
   {
-    "tip": "Type of storage that saves data between sessions",
-    "answer": "cache"
-  },
-  {
     "tip": "A backend JavaScript runtime environment",
     "answer": "deno"
   },
